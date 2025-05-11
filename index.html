@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Remote Work Savings Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      color: #333;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    input[type="number"] {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #0077cc;
+      color: white;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .result {
+      margin-top: 1.5rem;
+      font-weight: bold;
+    }
+    .explanation {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Remote Work Savings Calculator</h1>
+    <label for="rate">Your hourly rate ($):</label>
+    <input type="number" id="rate" placeholder="e.g. 25" />
+
+    <button onclick="calculate()">Calculate Savings</button>
+
+    <div class="result" id="output"></div>
+
+    <div class="explanation">
+      <p><strong>How it's calculated:</strong></p>
+      <ul>
+        <li>2 hours of commute time saved each workday × your hourly rate</li>
+        <li>$30 saved daily in childcare costs</li>
+        <li>$12 saved daily in gas and car maintenance</li>
+      </ul>
+      <p>Savings are based on 20 workdays per month and 240 workdays per year.</p>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const rate = parseFloat(document.getElementById('rate').value);
+      if (isNaN(rate) || rate <= 0) {
+        document.getElementById('output').innerText = "Please enter a valid hourly rate.";
+        return;
+      }
+
+      const dailyTimeValue = rate * 2; // 2 hours saved
+      const dailySavings = dailyTimeValue + 30 + 12;
+      const monthlySavings = dailySavings * 20;
+      const annualSavings = dailySavings * 240;
+
+      document.getElementById('output').innerHTML = `
+        On any given workday, you save: <br>
+        - $${dailyTimeValue.toFixed(2)} from time saved<br>
+        - $30 in childcare<br>
+        - $12 in gas/maintenance<br>
+        <br>
+        <strong>Total daily savings: $${dailySavings.toFixed(2)}</strong><br><br>
+        <strong>Monthly (20 workdays) savings: $${monthlySavings.toFixed(2)}</strong><br>
+        <strong>Annual (240 workdays) savings: $${annualSavings.toFixed(2)}</strong>
+      `;
+    }
+  </script>
+</body>
+</html>
